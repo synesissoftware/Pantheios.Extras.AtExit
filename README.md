@@ -2,5 +2,118 @@
 
 Standalone C library that registers multiple `atexit`-style callbacks (function + `void*` parameter) under the **Pantheios.Extras** namespace.
 
+![C](https://img.shields.io/badge/C-00599C?style=flat&logo=c&logoColor=white)
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![GitHub release](https://img.shields.io/github/v/release/synesissoftware/Pantheios.Extras.AtExit.svg)](https://github.com/synesissoftware/Pantheios.Extras.AtExit/releases/latest)
+[![Last Commit](https://img.shields.io/github/last-commit/synesissoftware/Pantheios.Extras.AtExit)](https://github.com/synesissoftware/Pantheios.Extras.AtExit/commits/master)
+[![CI](https://github.com/synesissoftware/Pantheios.Extras.AtExit/actions/workflows/ci.yml/badge.svg)](https://github.com/synesissoftware/Pantheios.Extras.AtExit/actions/workflows/ci.yml)
+
+
+## Table of Contents <!-- omit in toc -->
+
+- [Introduction](#introduction)
+  - [Dependencies](#dependencies)
+- [Installation](#installation)
+- [Components](#components)
+  - [C API / core library](#c-api--core-library)
+- [Examples](#examples)
+- [Project Information](#project-information)
+  - [Where to get help](#where-to-get-help)
+  - [Contribution guidelines](#contribution-guidelines)
+  - [Dependencies](#dependencies-1)
+    - [Development dependencies](#development-dependencies)
+  - [Related projects](#related-projects)
+  - [License](#license)
+
+
+## Introduction
+
+**Pantheios.Extras.AtExit** is a small compiled **C** library in the [Pantheios](http://pantheios.org/) extras namespace. It is **not** a Pantheios (or STLSoft) dependency: the core target needs only the C standard library.
+
+It extends libc `atexit()` with an explicit callback list so client code can register many `(function, void* param)` pairs that are invoked in **LIFO** order — either when `pantheios_extras_atexit_uninit()` drains the list, or later via the single libc `atexit` hook registered at init.
+
+`pantheios_extras_atexit_init()` must be called at most once per process. Later calls fail (`EBUSY`) even after `uninit()`, because libc `atexit` handlers cannot be unregistered. After a drain, the registered hook is a no-op.
+
+
+### Dependencies
+
+| Component    | Implemented in | Use in                                | Dependencies |
+| ------------ | -------------- | ------------------------------------- | ------------ |
+| Core library | C              | C — via **pantheios/extras/atexit.h** | C standard library |
+| Examples (C) | C              | —                                     | — |
+| Tests (C)    | C              | —                                     | [STLSoft](https://github.com/synesissoftware/STLSoft/), [xTests](https://github.com/synesissoftware/xTests/) |
+
+
+## Installation
+
+Detailed instructions — via **CMake**, via bundling — are provided in the accompanying [INSTALL.md](./INSTALL.md) file.
+
+
+## Components
+
+### C API / core library
+
+```C
+int
+pantheios_extras_atexit_init(
+    void*       reserved0
+,   unsigned    reserved1
+);
+
+void
+pantheios_extras_atexit_uninit(
+    void
+);
+
+int
+pantheios_extras_atexit_add(
+    void    (*pfn)(void* param)
+,   void*   param
+);
+```
+
+`reserved0` / `reserved1` are unused and must be passed as `NULL` / `0`.
+
+
+## Examples
+
+Examples are provided in the `examples` directory.
+
+
+## Project Information
+
+
+### Where to get help
+
+[GitHub Page](https://github.com/synesissoftware/Pantheios.Extras.AtExit)
+
+
+### Contribution guidelines
+
+Defect reports, feature requests, and pull requests are welcome on https://github.com/synesissoftware/Pantheios.Extras.AtExit.
+
+
+### Dependencies
+
+* none for the core library;
+
+
+#### Development dependencies
+
+* [STLSoft](https://github.com/synesissoftware/STLSoft/);
+* [xTests](https://github.com/synesissoftware/xTests/);
+
+
+### Related projects
+
+* [Pantheios](https://github.com/synesissoftware/Pantheios);
+* [Pantheios.Extras.DiagUtil](https://github.com/synesissoftware/Pantheios.Extras.DiagUtil);
+* [Pantheios.Extras.Main](https://github.com/synesissoftware/Pantheios.Extras.Main);
+
+
+### License
+
+**Pantheios.Extras.AtExit** is released under the 3-clause BSD license. See [LICENSE](./LICENSE) for details.
+
 
 <!-- ########################### end of file ########################### -->
