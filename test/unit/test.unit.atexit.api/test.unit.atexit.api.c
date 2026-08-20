@@ -100,7 +100,7 @@ test_init_after_uninit_fails(void)
 
 
 int
-main(int argc, char** argv)
+main(int argc, char* argv[])
 {
     int retCode = EXIT_SUCCESS;
     int verbosity = 2;
@@ -128,3 +128,4 @@ main(int argc, char** argv)
 
 
 /* ///////////////////////////// end of file //////////////////////////// */
+

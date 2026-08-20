@@ -4,6 +4,8 @@
 ## 0.1.2-alpha1 - 21st August 2026
 
 * Modernised library version macros to computed `PANTHEIOS_EXTRAS_ATEXIT_VER` (`VER_MAJOR` / `VER_MINOR` / `VER_PATCH` / `VER_ALPHABETA`, with `VER_REVISION` alias) targeting **0.1.2-alpha1**;
+* Added **ctest_cmake.sh** and **run_all_unit_tests.cmd**;
+* Ensured C/C++ sources end with a blank line after the end-of-file marker, and used `char* argv[]` in the unit-test `main`;
 
 
 ## 0.1.1 - 16th August 2026
