@@ -21,8 +21,8 @@
 
 * [ ] Document **`add` without `init`**: the list grows, but process exit will not drain it unless **`uninit`** is called;
 * [ ] Initialise C11 `atomic_int s_mx` with **`ATOMIC_VAR_INIT(0)`** if compilers warn on `= 0`;
-* [ ] Tests: **`add`** without **`init`** then **`uninit`**; **`add`** after **`uninit`**; version-macro unit test; keep process-exit coverage as scratch (or one automated case);
-* [ ] Example: check **`add`** return values;
+* [x] ~~~Tests: **`add`** without **`init`** then **`uninit`**; **`add`** after **`uninit`**; version-macro unit test; keep process-exit coverage as scratch (or one automated case);~~~ ✅
+* [x] ~~~Example: check **`add`** return values;~~~ ✅
 
 
 ### Enhancements

@@ -12,6 +12,7 @@ Standalone C library that registers multiple `atexit`-style callbacks (function 
 ## Table of Contents <!-- omit in toc -->
 
 - [Introduction](#introduction)
+  - [Why at-exit functionality](#why-at-exit-functionality)
   - [Dependencies](#dependencies)
 - [Installation](#installation)
 - [Components](#components)
