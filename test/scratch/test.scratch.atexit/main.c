@@ -1,10 +1,10 @@
 /* /////////////////////////////////////////////////////////////////////////
- * File:    test.scratch.atexit.c
+ * File:    main.c
  *
  * Purpose: Scratch test for Pantheios.Extras.AtExit.
  *
  * Created: 30th December 2011
- * Updated: 16th August 2026
+ * Updated: 21st August 2026
  *
  * ////////////////////////////////////////////////////////////////////// */
 
@@ -48,4 +48,3 @@ main(void)
 
 
 /* ///////////////////////////// end of file //////////////////////////// */
-

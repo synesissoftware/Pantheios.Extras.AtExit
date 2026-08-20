@@ -38,7 +38,8 @@
 
 ## Packaging improvements
 
-* \<none>
+* [ ] Defer rewriting helper `MSYSTEM` → `mingw32-make` / MinGW-generator detection until the **HELPER-SCRIPTS-C-CXX.md** contract is frozen (same defect class as other Synesis C/C++ helpers);
+* [ ] Split the unit-test implementation from its entry TU (then name the entry **entry.c**); until then keep the single-file **test.unit.atexit.api.c**;
 
 
 <!-- ########################### end of file ########################### -->
