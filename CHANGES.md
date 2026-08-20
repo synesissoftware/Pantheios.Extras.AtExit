@@ -1,6 +1,11 @@
 # Pantheios.Extras.AtExit - Changes <!-- omit in toc -->
 
 
+## 0.1.2-alpha1 - 21st August 2026
+
+* Modernised library version macros to computed `PANTHEIOS_EXTRAS_ATEXIT_VER` (`VER_MAJOR` / `VER_MINOR` / `VER_PATCH` / `VER_ALPHABETA`, with `VER_REVISION` alias) targeting **0.1.2-alpha1**;
+
+
 ## 0.1.1 - 16th August 2026
 
 * Recovered **Pantheios.Extras.AtExit** from Hautacam (`pantheios/extras/AtExit/0.1`, Created 30th December 2011) as a nested compiled C library;
