@@ -4,7 +4,7 @@
  * Purpose: Implementation file for Pantheios.Extras.AtExit
  *
  * Created: 30th December 2011
- * Updated: 16th August 2026
+ * Updated: 21st August 2026
  *
  * Home:    http://www.pantheios.org/
  *
@@ -168,6 +168,9 @@ pantheios_extras_atexit_init(
 )
 {
     int r;
+
+    assert(NULL == reserved0);
+    assert(0 == reserved1);
 
     ((void)reserved0);
     ((void)reserved1);

@@ -1,6 +1,12 @@
 # Pantheios.Extras.AtExit - Changes <!-- omit in toc -->
 
 
+## 0.1.3 - 23rd August 2026
+
+* Retargeted the current line from **0.1.2-alpha1** to **0.1.3**;
+* Asserted **`pantheios_extras_atexit_init()`** `reserved0` / `reserved1` as `NULL` / `0`;
+
+
 ## 0.1.2-alpha1 - 21st August 2026
 
 * Modernised library version macros to computed `PANTHEIOS_EXTRAS_ATEXIT_VER` (`VER_MAJOR` / `VER_MINOR` / `VER_PATCH` / `VER_ALPHABETA`, with `VER_REVISION` alias) targeting **0.1.2-alpha1**;

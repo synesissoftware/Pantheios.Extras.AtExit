@@ -13,7 +13,7 @@
 ### Medium
 
 * [ ] Serialise **`init`**: `s_initialised` is a plain `int` and `init` is not under the lock, so two threads can register two `atexit` hooks;
-* [ ] Align **`reserved0`** / **`reserved1`**: header says they must be `NULL` / `0`, but the implementation ignores them — `assert` or drop the requirement;
+* [x] ~~~Align **`reserved0`** / **`reserved1`**: header says they must be `NULL` / `0`, but the implementation ignores them — `assert` or drop the requirement;~~~ ✅
 * [ ] Stop treating **`atexit()`** failure as an `errno` / **`strerror()`** code; `EBUSY` / `ENOMEM` are errno values, `atexit` failure often is not;
 
 

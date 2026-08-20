@@ -4,7 +4,7 @@
  * Purpose:     Header file for Pantheios.Extras.AtExit.
  *
  * Created:     30th December 2011
- * Updated:     21st August 2026
+ * Updated:     23rd August 2026
  *
  * Home:        http://www.pantheios.org/
  *
@@ -55,8 +55,8 @@
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_MAJOR    1
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_MINOR    2
-# define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_REVISION 0
-# define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_EDIT     6
+# define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_REVISION 2
+# define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_EDIT     8
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /** \def PANTHEIOS_EXTRAS_ATEXIT_VER_MAJOR
@@ -88,12 +88,13 @@
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_1                     0x000101ff
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_2_ALPHA_1             0x00010241
+# define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_3                     0x000103ff
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 #define PANTHEIOS_EXTRAS_ATEXIT_VER_MAJOR                     0
 #define PANTHEIOS_EXTRAS_ATEXIT_VER_MINOR                     1
-#define PANTHEIOS_EXTRAS_ATEXIT_VER_PATCH                     2
-#define PANTHEIOS_EXTRAS_ATEXIT_VER_ALPHABETA                 0x41
+#define PANTHEIOS_EXTRAS_ATEXIT_VER_PATCH                     3
+#define PANTHEIOS_EXTRAS_ATEXIT_VER_ALPHABETA                 0xFF
 
 #define PANTHEIOS_EXTRAS_ATEXIT_VER \
     (0\
@@ -131,6 +132,9 @@ extern "C" {
  * \warning Failure to call this function will mean that no callbacks
  *   registered by pantheios_extras_atexit_add() will be invoked at process
  *   exit (they may still be invoked by pantheios_extras_atexit_uninit()).
+ *
+ * \pre (NULL == reserved0)
+ * \pre (0 == reserved1)
  */
 int
 pantheios_extras_atexit_init(
