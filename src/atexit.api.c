@@ -46,6 +46,10 @@
 
 #include <pantheios/extras/atexit/atexit.h>
 
+#ifdef _WIN32
+# include <windows.h>
+#endif
+
 #include <assert.h>
 #include <errno.h>
 #include <stdio.h>
@@ -57,7 +61,11 @@
  */
 
 #if 0
-#elif defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201112L)
+#elif 1 &&\
+      defined(__STDC_VERSION__) &&\
+      (__STDC_VERSION__ >= 201112L) &&\
+      !defined(_MSC_VER) &&\
+      1
 
 # include <stdatomic.h>
 typedef atomic_int pantheios_extras_atexit_atomic_int_t;
@@ -65,7 +73,6 @@ typedef atomic_int pantheios_extras_atexit_atomic_int_t;
 # define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)             ((void)atomic_fetch_sub((p), 1))
 #elif defined(_WIN32)
 
-# include <windows.h>
 typedef LONG pantheios_extras_atexit_atomic_int_t;
 # define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_INC_(p)             InterlockedIncrement((p))
 # define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)             InterlockedDecrement((p))
