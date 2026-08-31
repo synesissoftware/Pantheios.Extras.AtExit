@@ -5,7 +5,7 @@
  *          callbacks (LIFO) and drain them via uninit().
  *
  * Created: 30th December 2011
- * Updated: 21st August 2026
+ * Updated: 31st August 2026
  *
  * ////////////////////////////////////////////////////////////////////// */
 
@@ -40,10 +40,18 @@ add(
 
     if (0 != r)
     {
+#ifdef _MSC_VER
+        char error_message[256];
+
+        strerror_s(error_message, sizeof(error_message), r);
+#else
+        char const* error_message = strerror(r);
+#endif
+
         fprintf(
             stderr
         ,   "failed to add Pantheios.Extras.AtExit callback : %s (%d)\n"
-        ,   strerror(r)
+        ,   error_message
         ,   r
         );
     }
