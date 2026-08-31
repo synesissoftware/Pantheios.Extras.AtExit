@@ -55,28 +55,29 @@
  * atomics
  */
 
-#if defined(_WIN32)
+#if 0
+#elif defined(_WIN32)
 # include <windows.h>
 typedef LONG pantheios_extras_atexit_atomic_int_t;
-# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_INC_(p)    InterlockedIncrement((p))
-# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)    InterlockedDecrement((p))
+# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_INC_(p)             InterlockedIncrement((p))
+# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)             InterlockedDecrement((p))
 #elif defined(__STDC_NO_ATOMICS__)
 # if defined(__GNUC__) || defined(__clang__)
 typedef int pantheios_extras_atexit_atomic_int_t;
-#  define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_INC_(p)   __sync_add_and_fetch((p), 1)
-#  define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)   __sync_sub_and_fetch((p), 1)
+#  define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_INC_(p)            __sync_add_and_fetch((p), 1)
+#  define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)            __sync_sub_and_fetch((p), 1)
 # else
 #  error Pantheios.Extras.AtExit requires C11 atomics, GCC/Clang __sync, or Windows Interlocked
 # endif
 #elif defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201112L)
 # include <stdatomic.h>
 typedef atomic_int pantheios_extras_atexit_atomic_int_t;
-# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_INC_(p)    (atomic_fetch_add((p), 1) + 1)
-# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)    ((void)atomic_fetch_sub((p), 1))
+# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_INC_(p)             (atomic_fetch_add((p), 1) + 1)
+# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)             ((void)atomic_fetch_sub((p), 1))
 #elif defined(__GNUC__) || defined(__clang__)
 typedef int pantheios_extras_atexit_atomic_int_t;
-# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_INC_(p)    __sync_add_and_fetch((p), 1)
-# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)    __sync_sub_and_fetch((p), 1)
+# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_INC_(p)             __sync_add_and_fetch((p), 1)
+# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)             __sync_sub_and_fetch((p), 1)
 #else
 # error Pantheios.Extras.AtExit requires C11 atomics, GCC/Clang __sync, or Windows Interlocked
 #endif
