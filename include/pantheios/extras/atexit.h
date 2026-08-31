@@ -4,7 +4,7 @@
  * Purpose:     Main C header for the Pantheios.Extras.AtExit library.
  *
  * Created:     30th December 2011
- * Updated:     16th August 2026
+ * Updated:     21st August 2026
  *
  * Home:        http://www.pantheios.org/
  *
@@ -55,8 +55,8 @@
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_H_ATEXIT_MAJOR    1
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_H_ATEXIT_MINOR    0
-# define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_H_ATEXIT_REVISION 3
-# define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_H_ATEXIT_EDIT     4
+# define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_H_ATEXIT_REVISION 4
+# define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_H_ATEXIT_EDIT     5
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -76,3 +76,4 @@
 #endif /* !PANTHEIOS_EXTRAS_ATEXIT_INCL_PANTHEIOS_EXTRAS_H_ATEXIT */
 
 /* ///////////////////////////// end of file //////////////////////////// */
+

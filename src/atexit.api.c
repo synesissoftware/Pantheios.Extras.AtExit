@@ -4,7 +4,7 @@
  * Purpose: Implementation file for Pantheios.Extras.AtExit
  *
  * Created: 30th December 2011
- * Updated: 16th August 2026
+ * Updated: 31st August 2026
  *
  * Home:    http://www.pantheios.org/
  *
@@ -72,7 +72,7 @@ typedef int pantheios_extras_atexit_atomic_int_t;
 # include <stdatomic.h>
 typedef atomic_int pantheios_extras_atexit_atomic_int_t;
 # define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_INC_(p)    (atomic_fetch_add((p), 1) + 1)
-# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)    (atomic_fetch_sub((p), 1) - 1)
+# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)    ((void)atomic_fetch_sub((p), 1))
 #elif defined(__GNUC__) || defined(__clang__)
 typedef int pantheios_extras_atexit_atomic_int_t;
 # define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_INC_(p)    __sync_add_and_fetch((p), 1)
@@ -248,3 +248,4 @@ pantheios_extras_atexit_log_string_(
 }
 
 /* ///////////////////////////// end of file //////////////////////////// */
+

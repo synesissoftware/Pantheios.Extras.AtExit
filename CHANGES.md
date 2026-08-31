@@ -1,6 +1,15 @@
 # Pantheios.Extras.AtExit - Changes <!-- omit in toc -->
 
 
+## 0.1.2-alpha1 - 21st August 2026
+
+* Modernised library version macros to computed `PANTHEIOS_EXTRAS_ATEXIT_VER` (`VER_MAJOR` / `VER_MINOR` / `VER_PATCH` / `VER_ALPHABETA`, with `VER_REVISION` alias) targeting **0.1.2-alpha1**;
+* Added **ctest_cmake.sh** and **run_all_unit_tests.cmd**;
+* Ensured C/C++ sources end with a blank line after the end-of-file marker, and used `char* argv[]` in the unit-test `main`;
+* Renamed the scratch program implementation to **main.c**;
+* Recorded functionality-review items in **TODO.md**; deferred applying them, and deferred the helper **MSYSTEM**/MinGW rewrite until the **HELPER-SCRIPTS-C-CXX.md** contract is frozen;
+
+
 ## 0.1.1 - 16th August 2026
 
 * Recovered **Pantheios.Extras.AtExit** from Hautacam (`pantheios/extras/AtExit/0.1`, Created 30th December 2011) as a nested compiled C library;
