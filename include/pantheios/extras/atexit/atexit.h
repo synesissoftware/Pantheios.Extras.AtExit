@@ -4,7 +4,7 @@
  * Purpose:     Header file for Pantheios.Extras.AtExit.
  *
  * Created:     30th December 2011
- * Updated:     23rd August 2026
+ * Updated:     31st August 2026
  *
  * Home:        http://www.pantheios.org/
  *

@@ -59,10 +59,18 @@ main(void)
 
     if (0 != r)
     {
+#ifdef _MSC_VER
+        char error_message[256];
+
+        strerror_s(error_message, sizeof(error_message), r);
+#else
+        char const* error_message = strerror(r);
+#endif
+
         fprintf(
             stderr
         ,   "failed to initialise Pantheios.Extras.AtExit : %s (%d)\n"
-        ,   strerror(r)
+        ,   error_message
         ,   r
         );
 
