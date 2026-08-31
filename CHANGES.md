@@ -1,7 +1,7 @@
 # Pantheios.Extras.AtExit - Changes <!-- omit in toc -->
 
 
-## 0.1.3 - 23rd August 2026
+## 0.1.3 - 31st August 2026
 
 * Retargeted the current line from **0.1.2-alpha1** to **0.1.3**;
 * Asserted **`pantheios_extras_atexit_init()`** `reserved0` / `reserved1` as `NULL` / `0`;
