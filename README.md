@@ -12,6 +12,7 @@ Standalone C library that registers multiple `atexit`-style callbacks (function 
 ## Table of Contents <!-- omit in toc -->
 
 - [Introduction](#introduction)
+  - [Why at-exit functionality](#why-at-exit-functionality)
   - [Dependencies](#dependencies)
 - [Installation](#installation)
 - [Components](#components)
@@ -28,11 +29,24 @@ Standalone C library that registers multiple `atexit`-style callbacks (function 
 
 ## Introduction
 
-**Pantheios.Extras.AtExit** is a small compiled **C** library in the [Pantheios](http://pantheios.org/) extras namespace. It is **not** a Pantheios (or STLSoft) dependency: the core target needs only the C standard library.
+**Pantheios.Extras.AtExit** is a small compiled **C** library in the [Pantheios](http://pantheios.org/) extras namespace. Unlike most/all of the other Pantheios Extras libraries, it is **not** a Pantheios (or STLSoft) dependency: the core target needs only the C standard library.
 
-It extends libc `atexit()` with an explicit callback list so client code can register many `(function, void* param)` pairs that are invoked in **LIFO** order — either when `pantheios_extras_atexit_uninit()` drains the list, or later via the single libc `atexit` hook registered at init.
+Its raison d'être is to provide a richer alternative to the standard C library's `atexit()`, with an explicit callback list so client code can register many `(function, void* param)` pairs that are invoked in **LIFO** order — either when `pantheios_extras_atexit_uninit()` drains the list, or later via the single libc `atexit` hook registered at init. Importantly. each callback is also accompanied by a `void*` parameter that is given back to the callback when it is invoked, thereby enabling stateful cleanup.
 
 `pantheios_extras_atexit_init()` must be called at most once per process. Later calls fail (`EBUSY`) even after `uninit()`, because libc `atexit` handlers cannot be unregistered. After a drain, the registered hook is a no-op.
+
+
+### Why at-exit functionality
+
+C programs often need last-chance cleanup: flushing diagnostics, releasing process-wide resources, or tearing down library state that has no natural owner once `main` has returned. libc `atexit()` is the portable hook for that, but it is a poor *unit of currency* for libraries and layered applications:
+
+* Handlers are `void (*)(void)`. Any context must live in globals, which couples unrelated components and makes reuse harder;
+* The number of handlers is small and shared (`ATEXIT_MAX`, often 32). A library that registers one slot per subsystem, sink, or module can exhaust the table for the rest of the process;
+* There is no unregister. A component that is done *before* process exit cannot drop its handler, and a second registration is another scarce slot;
+
+**Pantheios.Extras.AtExit** exists so that many callers can each register `(function, void* param)` without consuming a libc slot per callback. The library takes **one** `atexit` registration at `init` and maintains its own LIFO list. `uninit` drains that list early when the process is still in a well-defined state; if `uninit` is not used, the same list runs from the libc hook at exit.
+
+That is the same protocol as other **Pantheios.Extras** helpers: keep the core logging library free of this concern, and give C clients a small, stdlib-only facility instead of rolling an ad-hoc static list in every program.
 
 
 ### Dependencies

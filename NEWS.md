@@ -10,6 +10,7 @@
 
 | Date             | News Item                                                                        |
 | ---------------- | -------------------------------------------------------------------------------- |
+| 31st August 2026 | Pantheios.Extras.AtExit 0.1.3                                                    |
 | 21st August 2026 | Pantheios.Extras.AtExit 0.1.2-alpha1                                             |
 | 16th August 2026 | Pantheios.Extras.AtExit 0.1.1 recovered and released                             |
 
