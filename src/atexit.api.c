@@ -51,36 +51,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 /* /////////////////////////////////////////////////////////////////////////
  * atomics
  */
 
 #if 0
-#elif defined(_WIN32)
-# include <windows.h>
-typedef LONG pantheios_extras_atexit_atomic_int_t;
-# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_INC_(p)             InterlockedIncrement((p))
-# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)             InterlockedDecrement((p))
-#elif defined(__STDC_NO_ATOMICS__)
-# if defined(__GNUC__) || defined(__clang__)
-typedef int pantheios_extras_atexit_atomic_int_t;
-#  define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_INC_(p)            __sync_add_and_fetch((p), 1)
-#  define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)            __sync_sub_and_fetch((p), 1)
-# else
-#  error Pantheios.Extras.AtExit requires C11 atomics, GCC/Clang __sync, or Windows Interlocked
-# endif
 #elif defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201112L)
+
 # include <stdatomic.h>
 typedef atomic_int pantheios_extras_atexit_atomic_int_t;
 # define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_INC_(p)             (atomic_fetch_add((p), 1) + 1)
 # define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)             ((void)atomic_fetch_sub((p), 1))
+#elif defined(_WIN32)
+
+# include <windows.h>
+typedef LONG pantheios_extras_atexit_atomic_int_t;
+# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_INC_(p)             InterlockedIncrement((p))
+# define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)             InterlockedDecrement((p))
 #elif defined(__GNUC__) || defined(__clang__)
+
 typedef int pantheios_extras_atexit_atomic_int_t;
 # define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_INC_(p)             __sync_add_and_fetch((p), 1)
 # define PANTHEIOS_EXTRAS_ATEXIT_ATOMIC_DEC_(p)             __sync_sub_and_fetch((p), 1)
 #else
+
 # error Pantheios.Extras.AtExit requires C11 atomics, GCC/Clang __sync, or Windows Interlocked
 #endif
+
 
 /* /////////////////////////////////////////////////////////////////////////
  * types
@@ -95,6 +93,7 @@ struct pantheios_extras_atexit_context_t_
     pantheios_extras_atexit_context_t_* next;
 };
 
+
 /* /////////////////////////////////////////////////////////////////////////
  * globals
  */
@@ -102,6 +101,7 @@ struct pantheios_extras_atexit_context_t_
 static pantheios_extras_atexit_context_t_*  s_head          =   NULL;
 static pantheios_extras_atexit_atomic_int_t s_mx            =   0;
 static int                                  s_initialised   =   0;
+
 
 /* /////////////////////////////////////////////////////////////////////////
  * helpers
@@ -157,6 +157,7 @@ pantheios_extras_atexit_procedure_(
     pantheios_extras_atexit_drain_unlocked_();
     pantheios_extras_atexit_unlock_();
 }
+
 
 /* /////////////////////////////////////////////////////////////////////////
  * API
@@ -235,6 +236,7 @@ pantheios_extras_atexit_add(
     return 0;
 }
 
+
 /* /////////////////////////////////////////////////////////////////////////
  * helper definitions
  */
@@ -248,6 +250,7 @@ pantheios_extras_atexit_log_string_(
 #ifdef _WIN32
     OutputDebugStringA(message);
 #endif /* _WIN32 */
+
     fputs(message, stderr);
 }
 
