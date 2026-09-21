@@ -1,6 +1,12 @@
 # Pantheios.Extras.AtExit - Changes <!-- omit in toc -->
 
 
+## Unreleased
+
+* Applied **misc-dev-scripts** **0.6.0** editor/Git/`.sis` drop-in templates on **boilerplate**;
+* Restored historical **.gitignore** patterns as a sorted union with **misc-dev-scripts** gold section layout;
+
+
 ## 0.1.3 - 31st August 2026
 
 * Retargeted the current line from **0.1.2-alpha1** to **0.1.3**;
