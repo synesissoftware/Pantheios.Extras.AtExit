@@ -4,7 +4,7 @@
  * Purpose:     Header file for Pantheios.Extras.AtExit.
  *
  * Created:     30th December 2011
- * Updated:     31st August 2026
+ * Updated:     9th October 2026
  *
  * Home:        http://www.pantheios.org/
  *
@@ -80,21 +80,17 @@
  * The current composite version number of Pantheios.Extras.AtExit
  */
 
-/** \def PANTHEIOS_EXTRAS_ATEXIT_VER_REVISION
- * Alias of PANTHEIOS_EXTRAS_ATEXIT_VER_PATCH (for CMake scrapers / older
- * consumers)
- */
-
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_1                     0x000101ff
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_2_ALPHA_1             0x00010241
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_3                     0x000103ff
+# define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_4_BETA_1              0x00010481
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 #define PANTHEIOS_EXTRAS_ATEXIT_VER_MAJOR                     0
 #define PANTHEIOS_EXTRAS_ATEXIT_VER_MINOR                     1
-#define PANTHEIOS_EXTRAS_ATEXIT_VER_PATCH                     3
-#define PANTHEIOS_EXTRAS_ATEXIT_VER_ALPHABETA                 0xFF
+#define PANTHEIOS_EXTRAS_ATEXIT_VER_PATCH                     4
+#define PANTHEIOS_EXTRAS_ATEXIT_VER_ALPHABETA                 0x81
 
 #define PANTHEIOS_EXTRAS_ATEXIT_VER \
     (0\
@@ -104,7 +100,9 @@
         |   (   PANTHEIOS_EXTRAS_ATEXIT_VER_ALPHABETA   <<  0   ) \
     )
 
-#define PANTHEIOS_EXTRAS_ATEXIT_VER_REVISION                  PANTHEIOS_EXTRAS_ATEXIT_VER_PATCH
+#ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
+# define PANTHEIOS_EXTRAS_ATEXIT_VER_REVISION               PANTHEIOS_EXTRAS_ATEXIT_VER_PATCH
+#endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 #ifdef __cplusplus
 extern "C" {
