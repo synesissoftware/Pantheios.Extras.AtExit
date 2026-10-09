@@ -4,7 +4,7 @@
  * Purpose:     Header file for Pantheios.Extras.AtExit.
  *
  * Created:     30th December 2011
- * Updated:     17th September 2026
+ * Updated:     9th October 2026
  *
  * Home:        http://www.pantheios.org/
  *
@@ -84,12 +84,13 @@
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_1                     0x000101ff
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_2_ALPHA_1             0x00010241
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_3                     0x000103ff
+# define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_4_BETA_1              0x00010481
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 #define PANTHEIOS_EXTRAS_ATEXIT_VER_MAJOR                     0
 #define PANTHEIOS_EXTRAS_ATEXIT_VER_MINOR                     1
-#define PANTHEIOS_EXTRAS_ATEXIT_VER_PATCH                     3
-#define PANTHEIOS_EXTRAS_ATEXIT_VER_ALPHABETA                 0xFF
+#define PANTHEIOS_EXTRAS_ATEXIT_VER_PATCH                     4
+#define PANTHEIOS_EXTRAS_ATEXIT_VER_ALPHABETA                 0x81
 
 #define PANTHEIOS_EXTRAS_ATEXIT_VER \
     (0\
