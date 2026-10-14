@@ -7,7 +7,10 @@
 * Restored historical **.gitignore** patterns as a sorted union with **misc-dev-scripts** gold section layout;
 * Modernised CMake helpers to the Phase 4b dialect (`SisClr_*` / `-A`, `sis_cmake_build`, no MinGW-from-`MSYSTEM`), retaining **`--stlsoft-root-dir`** as a project-specific **prepare_cmake.sh** flag;
 * Native Windows **`run_all_*.cmd`** runners (no Bash wrap); aggregate **`run_all_automated_tests.*`**, with **`run_all_unit_tests.*`** now unit-only;
-* Renamed the scratch version-reporter target to **`test.scratch.versions`**;
+* Gold-copied tip **`run_all_examples.*`** / **`run_all_scratch_tests.*`** / **`run_all_unit_tests.sh`** from **misc-dev-scripts** `cmake-helpers` `@0754c23` (discovery exclusions; scratch **`--skip-interactive`**);
+* Renamed the scratch version-reporter target to **`test.scratch.versions`**; set **`PROGRAM_NAME`** to **`test.scratch.versions`**;
+* Migrated the version low-byte macro to **`PANTHEIOS_EXTRAS_ATEXIT_VER_RELSTATUS`** (value **0x81**), retaining **`PANTHEIOS_EXTRAS_ATEXIT_VER_ALPHABETA`** as a documentation-skip alias;
+* Added **`.github/actions/install-sis-deps`**; **ci-cell** uses **`${{ env.SIS_DEPS }}`**, execute-bit restore after artifact download, and Windows **`shell: cmd`** dogfood of **`run_all_*.cmd`**;
 * Updated the **ci-cell.yml** component-test job to call **run_all_component_tests.sh**, since **run_all_unit_tests.sh** is now unit-only;
 * Added `PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_4_BETA_1` and updated unit test **test.unit.version** accordingly;
 

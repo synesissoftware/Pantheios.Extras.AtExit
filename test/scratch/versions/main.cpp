@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 
-#define PROGRAM_NAME                                        "versions"
+#define PROGRAM_NAME                                        "test.scratch.versions"
 
 
 template<
