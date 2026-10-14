@@ -7,9 +7,6 @@
 #include <stdlib.h>
 
 
-#define PROGRAM_NAME                                        "test.scratch.versions"
-
-
 template<
     typename T_stream
 ,   typename T_integer
