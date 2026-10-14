@@ -4,7 +4,7 @@
  * Purpose:     Header file for Pantheios.Extras.AtExit.
  *
  * Created:     30th December 2011
- * Updated:     9th October 2026
+ * Updated:     14th October 2026
  *
  * Home:        http://www.pantheios.org/
  *
@@ -55,8 +55,8 @@
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_MAJOR    1
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_MINOR    2
-# define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_REVISION 2
-# define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_EDIT     8
+# define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_REVISION 4
+# define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_EDIT     10
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /** \def PANTHEIOS_EXTRAS_ATEXIT_VER_MAJOR
@@ -71,9 +71,9 @@
  * The patch version number of Pantheios.Extras.AtExit
  */
 
-/** \def PANTHEIOS_EXTRAS_ATEXIT_VER_ALPHABETA
- * The alpha/beta designator of Pantheios.Extras.AtExit, or 0xFF for a
- * non-prerelease
+/** \def PANTHEIOS_EXTRAS_ATEXIT_VER_RELSTATUS
+ * The release status of Pantheios.Extras.AtExit, in the range 1-0xFE for
+ * prerelease versions, and 0xFF for a released version
  */
 
 /** \def PANTHEIOS_EXTRAS_ATEXIT_VER
@@ -85,22 +85,24 @@
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_2_ALPHA_1             0x00010241
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_3                     0x000103ff
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_4_BETA_1              0x00010481
+# define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_4_BETA_2              0x00010482
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 #define PANTHEIOS_EXTRAS_ATEXIT_VER_MAJOR                     0
 #define PANTHEIOS_EXTRAS_ATEXIT_VER_MINOR                     1
 #define PANTHEIOS_EXTRAS_ATEXIT_VER_PATCH                     4
-#define PANTHEIOS_EXTRAS_ATEXIT_VER_ALPHABETA                 0x81
+#define PANTHEIOS_EXTRAS_ATEXIT_VER_RELSTATUS                 0x82
 
 #define PANTHEIOS_EXTRAS_ATEXIT_VER \
     (0\
         |   (   PANTHEIOS_EXTRAS_ATEXIT_VER_MAJOR       << 24   ) \
         |   (   PANTHEIOS_EXTRAS_ATEXIT_VER_MINOR       << 16   ) \
         |   (   PANTHEIOS_EXTRAS_ATEXIT_VER_PATCH       <<  8   ) \
-        |   (   PANTHEIOS_EXTRAS_ATEXIT_VER_ALPHABETA   <<  0   ) \
+        |   (   PANTHEIOS_EXTRAS_ATEXIT_VER_RELSTATUS   <<  0   ) \
     )
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
+# define PANTHEIOS_EXTRAS_ATEXIT_VER_ALPHABETA              PANTHEIOS_EXTRAS_ATEXIT_VER_RELSTATUS
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_REVISION               PANTHEIOS_EXTRAS_ATEXIT_VER_PATCH
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
