@@ -1,6 +1,11 @@
 # Pantheios.Extras.AtExit - Changes <!-- omit in toc -->
 
 
+## 0.1.4-beta3 - 27th October 2026
+
+* Defined `HAS_xTests` and `HAS_XTESTS` when **xTests** is detected;
+
+
 ## 0.1.4-beta2 - 14th October 2026
 
 * Advanced the library version to **0.1.4-beta2** (`PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_4_BETA_2`, `PANTHEIOS_EXTRAS_ATEXIT_VER_RELSTATUS` **0x82**);
