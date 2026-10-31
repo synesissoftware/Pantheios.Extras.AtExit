@@ -1,6 +1,15 @@
 # Pantheios.Extras.AtExit - Changes <!-- omit in toc -->
 
 
+## 0.1.4-beta4 - 1st November 2026
+
+* testing:
+  * `File:` labels under **examples** name the project-relative path;
+  * `File:` labels under **test** name the project-relative path;
+* build:
+  * the **Check test names** job runs **STLSoft** **check_unit_test_names.rb** over **examples** and **test**;
+
+
 ## 0.1.4-beta3 - 27th October 2026
 
 * Defined `HAS_xTests` and `HAS_XTESTS` when **xTests** is detected;

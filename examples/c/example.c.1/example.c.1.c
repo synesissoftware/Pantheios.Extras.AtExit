@@ -1,11 +1,11 @@
 /* /////////////////////////////////////////////////////////////////////////
- * File:    example.c.1.c
+ * File:    examples/c/example.c.1/example.c.1.c
  *
  * Purpose: Example of Pantheios.Extras.AtExit: register several atexit
  *          callbacks (LIFO) and drain them via uninit().
  *
  * Created: 30th December 2011
- * Updated: 31st August 2026
+ * Updated: 30th October 2026
  *
  * ////////////////////////////////////////////////////////////////////// */
 
