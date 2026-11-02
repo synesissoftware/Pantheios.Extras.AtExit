@@ -26,7 +26,7 @@ For a minimal core-only build with no external dependencies:
 $ ./prepare_cmake.sh --disable-testing --disable-examples -m
 ```
 
-For a full build (including tests), install **STLSoft** 1.11 and **xTests**
+For a full build (including tests), install **STLSoft** 1.11.5 and **xTests**
 first, then:
 
 ```bash

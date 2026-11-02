@@ -5,7 +5,7 @@
 # Purpose:  Top-level CMake lists file for Pantheios.Extras.AtExit
 #
 # Created:  16th August 2026
-# Updated:  16th August 2026
+# Updated:  2nd November 2026
 #
 # ######################################################################## #
 
@@ -126,7 +126,7 @@ if(BUILD_TESTING)
 
 	if(NOT DEFINED STLSOFT AND NOT DEFINED ENV{STLSOFT})
 
-		set(STLSoft_REQUIRED_VERSION_ 1.11)
+		set(STLSoft_REQUIRED_VERSION_ 1.11.5)
 
 		find_package(STLSoft ${STLSoft_REQUIRED_VERSION_} REQUIRED)
 
@@ -163,7 +163,7 @@ endif()
 
 if(BUILD_TESTING)
 
-	set(xTests_REQUIRED_VERSION_ 0.28)
+	set(xTests_REQUIRED_VERSION_ 0.28.2)
 
 	find_package(xTests ${xTests_REQUIRED_VERSION_} REQUIRED)
 

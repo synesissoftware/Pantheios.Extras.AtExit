@@ -1,6 +1,15 @@
 # Pantheios.Extras.AtExit - Changes <!-- omit in toc -->
 
 
+## 0.1.4-beta5 - 2nd November 2026
+
+* version:
+  * added `PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_4_BETA_5`;
+
+* build:
+  * **STLSoft** minimum is **1.11.5**;
+  * **xTests** minimum is **0.28.2**;
+
 ## 0.1.4-beta4 - 1st November 2026
 
 * testing:
