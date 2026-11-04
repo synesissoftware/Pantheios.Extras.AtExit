@@ -58,14 +58,15 @@ jobs:
 
       # Dependency order is deliberate (not lexicographic): each package
       # configures against those already installed in the shared prefix.
-      # shwild precedes xTests; AtExit itself needs neither Pantheios nor b64.
+      # woad precedes xTests (find_package woad 0.2); shwild precedes
+      # xTests. AtExit itself needs neither Pantheios nor b64.
       - name: Install SIS dependencies
         uses: ./.github/actions/install-sis-deps
         with:
           build-type: ${{ inputs.build-type }}
           c-compiler: ${{ inputs.c-compiler }}
           cpp-compiler: ${{ inputs.cpp-compiler }}
-          dependencies: STLSoft shwild xTests
+          dependencies: STLSoft shwild woad xTests
           toolchain: ${{ inputs.toolchain }}
 
       - name: Configure
