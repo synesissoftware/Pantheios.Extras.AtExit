@@ -1,12 +1,12 @@
 /* /////////////////////////////////////////////////////////////////////////
- * File:        pantheios/extras/atexit/atexit.h
+ * File:    pantheios/extras/atexit/atexit.h
  *
- * Purpose:     Header file for Pantheios.Extras.AtExit.
+ * Purpose: Header file for Pantheios.Extras.AtExit.
  *
- * Created:     30th December 2011
- * Updated:     2nd November 2026
+ * Created: 30th December 2011
+ * Updated: 4th November 2026
  *
- * Home:        http://www.pantheios.org/
+ * Home:    http://www.pantheios.org/
  *
  * Copyright (c) 2019-2026, Matthew Wilson and Synesis Information Systems
  * Copyright (c) 2011-2019, Matthew Wilson and Synesis Software
@@ -55,8 +55,8 @@
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_MAJOR    1
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_MINOR    2
-# define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_REVISION 4
-# define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_EDIT     13
+# define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_REVISION 5
+# define PANTHEIOS_EXTRAS_ATEXIT_VER_PANTHEIOS_EXTRAS_ATEXIT_H_ATEXIT_EDIT     14
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /** \def PANTHEIOS_EXTRAS_ATEXIT_VER_MAJOR
@@ -89,12 +89,13 @@
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_4_BETA_3              0x00010483
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_4_BETA_4              0x00010484
 # define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_4_BETA_5              0x00010485
+# define PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_4                     0x000104ff
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 #define PANTHEIOS_EXTRAS_ATEXIT_VER_MAJOR                     0
 #define PANTHEIOS_EXTRAS_ATEXIT_VER_MINOR                     1
 #define PANTHEIOS_EXTRAS_ATEXIT_VER_PATCH                     4
-#define PANTHEIOS_EXTRAS_ATEXIT_VER_RELSTATUS                 0x85
+#define PANTHEIOS_EXTRAS_ATEXIT_VER_RELSTATUS                 0xff
 
 #define PANTHEIOS_EXTRAS_ATEXIT_VER \
     (0\
@@ -117,27 +118,28 @@ extern "C" {
  * API
  */
 
-/** Initialises the Pantheios.Extras.AtExit library, registering the API
- * state with the C standard library function <code>atexit()</code>.
+/** \brief Initialises the library and registers one libc atexit hook.
  *
- * Must not be called more than once per process. Subsequent calls fail
- * even after \c pantheios_extras_atexit_uninit(), because libc
- * <code>atexit()</code> handlers cannot be unregistered.
+ * Concurrent calls are serialised on the library lock. The first call that
+ * finds the library uninitialised registers the hook; every other call
+ * returns EBUSY, including calls after uninit(), because libc atexit()
+ * handlers cannot be unregistered.
  *
- * \param reserved0 Currently unused. Must be NULL.
- * \param reserved1 Currently unused. Must be 0.
+ * \param reserved0 Currently unused. Must be NULL;
+ * \param reserved1 Currently unused. Must be 0;
  *
- * \retval 0 The library was initialised successfully.
- * \retval !0 The library was not initialised successfully. The return value
- *   is a C failure code, and may be used with <code>strerror()</code> to
- *   obtain a human-readable string form of the failure.
+ * \retval 0 The library was initialised;
+ * \retval EBUSY The library was already initialised;
+ * \retval ENOMEM libc atexit() could not register the hook. The raw
+ *   atexit() status is not returned; ENOMEM is an errno value and may be
+ *   passed to strerror();
  *
- * \warning Failure to call this function will mean that no callbacks
- *   registered by pantheios_extras_atexit_add() will be invoked at process
- *   exit (they may still be invoked by pantheios_extras_atexit_uninit()).
+ * \pre NULL == reserved0
+ * \pre 0 == reserved1
  *
- * \pre (NULL == reserved0)
- * \pre (0 == reserved1)
+ * \note add() before a successful init() still queues callbacks. Process
+ *   exit drains that queue only after init() has registered the hook.
+ *   uninit() can drain the queue without init().
  */
 int
 pantheios_extras_atexit_init(
@@ -145,35 +147,33 @@ pantheios_extras_atexit_init(
 ,   unsigned    reserved1
 );
 
-/** Uninitialises the Pantheios.Extras.AtExit library.
+/** \brief Drains registered callbacks and leaves the libc hook in place.
  *
- * Invokes remaining registered callbacks (LIFO) and frees the list so the
- * registered <code>atexit()</code> hook is a no-op. Does not (and cannot)
- * unregister the libc <code>atexit()</code> handler.
+ * Invokes the current list in LIFO order, then frees those nodes. The libc
+ * atexit() handler stays registered, so a later add() still runs at process
+ * exit or at a later uninit(). Callbacks run after the library lock is
+ * released, and may call add() or uninit().
  */
 void
 pantheios_extras_atexit_uninit(
     void
 );
 
-/** Adds a callback function to the Pantheios.Extras.AtExit library, which
- * will be called, along with the given callback parameter, during
- * <code>atexit()</code>-processing, or during
- * \c pantheios_extras_atexit_uninit() if that is invoked first.
+/** \brief Registers a callback and the parameter passed to it.
  *
- * Callbacks are invoked in LIFO order.
+ * The callback runs during atexit processing, or during uninit() when that
+ * drains the list first. Order is LIFO. add() after uninit() is valid; the
+ * hook is still live. add() before init() queues the callback, and process
+ * exit drains it only after a successful init().
  *
- * \param pfn Callback function.
- * \param param Parameter to be passed to the callback function when it is
- *   invoked.
+ * \param pfn Callback function;
+ * \param param Value passed to pfn when it is invoked;
  *
- * \retval 0 The callback function was successfully registered.
- * \retval !0 The callback function was not registered successfully. The
- *   return value is a C failure code, and may be used with
- *   <code>strerror()</code> to obtain a human-readable string form of the
- *   failure.
+ * \retval 0 The callback was registered;
+ * \retval ENOMEM The callback was not registered. ENOMEM may be passed
+ *   to strerror();
  *
- * \pre (NULL != pfn)
+ * \pre NULL != pfn
  */
 int
 pantheios_extras_atexit_add(

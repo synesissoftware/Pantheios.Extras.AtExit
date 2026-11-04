@@ -14,6 +14,7 @@ Standalone C library that registers multiple `atexit`-style callbacks (function 
 - [Introduction](#introduction)
   - [Why at-exit functionality](#why-at-exit-functionality)
   - [Dependencies](#dependencies)
+- [Developer Experience](#developer-experience)
 - [Installation](#installation)
 - [Components](#components)
   - [C API / core library](#c-api--core-library)
@@ -33,7 +34,7 @@ Standalone C library that registers multiple `atexit`-style callbacks (function 
 
 Its raison d'être is to provide a richer alternative to the standard C library's `atexit()`, with an explicit callback list so client code can register many `(function, void* param)` pairs that are invoked in **LIFO** order — either when `pantheios_extras_atexit_uninit()` drains the list, or later via the single libc `atexit` hook registered at init. Importantly. each callback is also accompanied by a `void*` parameter that is given back to the callback when it is invoked, thereby enabling stateful cleanup.
 
-`pantheios_extras_atexit_init()` must be called at most once per process. Later calls fail (`EBUSY`) even after `uninit()`, because libc `atexit` handlers cannot be unregistered. After a drain, the registered hook is a no-op.
+`pantheios_extras_atexit_init()` must be called at most once per process. Concurrent calls are serialised; one succeeds and the others return `EBUSY`. Later calls fail even after `uninit()`, because libc `atexit` handlers cannot be unregistered. `uninit()` drains the current list and leaves that hook registered, so a later `add()` still runs at process exit (or at a later `uninit()`). Callbacks run without the library lock held, so a callback may call `add()` or `uninit()`. `add()` before `init()` queues callbacks; process exit drains them only after a successful `init()`.
 
 
 ### Why at-exit functionality
@@ -56,6 +57,45 @@ That is the same protocol as other **Pantheios.Extras** helpers: keep the core l
 | Core library | C              | C — via **pantheios/extras/atexit.h** | C standard library |
 | Examples (C) | C              | —                                     | — |
 | Tests (C)    | C              | —                                     | [STLSoft](https://github.com/synesissoftware/STLSoft/), [xTests](https://github.com/synesissoftware/xTests/) |
+
+
+## Developer Experience
+
+The core library needs a C compiler and the C standard library. Tests and examples also need **STLSoft** 1.11.5 and, for tests, **xTests** 0.28.2.
+
+Core-only configure and build:
+
+```bash
+./prepare_cmake.sh --disable-testing --disable-examples -m -v
+```
+
+```c
+#include <pantheios/extras/atexit.h>
+
+static void bye(void* param)
+{
+    (void)param;
+}
+
+int main(void)
+{
+    if (0 != pantheios_extras_atexit_init(NULL, 0))
+    {
+        return 1;
+    }
+
+    if (0 != pantheios_extras_atexit_add(bye, NULL))
+    {
+        return 1;
+    }
+
+    pantheios_extras_atexit_uninit();
+
+    return 0;
+}
+```
+
+`init` failure is `EBUSY` (already initialised) or `ENOMEM` (the libc `atexit` hook could not be registered). Both are `errno` values. Installation, bundling, and a full test build are in [INSTALL.md](./INSTALL.md). The same `init` / `add` / `uninit` sequence, with several callbacks, is `examples/c/example.c.1`.
 
 
 ## Installation

@@ -4,7 +4,7 @@
  * Purpose: Unit tests for Pantheios.Extras.AtExit.
  *
  * Created: 16th August 2026
- * Updated: 30th October 2026
+ * Updated: 4th November 2026
  *
  * ////////////////////////////////////////////////////////////////////// */
 
@@ -25,6 +25,8 @@ static int  s_tag3 = 3;
 static int  s_tag7 = 7;
 static int  s_tag_pre = 11;
 static int  s_tag_post = 13;
+static int  s_tag_inner = 17;
+static int  s_reenter_add_rc;
 
 
 static void
@@ -114,6 +116,15 @@ test_init_after_uninit_fails(void)
 }
 
 static void
+record_then_reenter(void* param)
+{
+    record(param);
+
+    s_reenter_add_rc = pantheios_extras_atexit_add(record, &s_tag_inner);
+    pantheios_extras_atexit_uninit();
+}
+
+static void
 test_add_after_uninit_then_uninit_again(void)
 {
     s_ncalls = 0;
@@ -124,6 +135,22 @@ test_add_after_uninit_then_uninit_again(void)
 
     XTESTS_TEST_INTEGER_EQUAL(1, s_ncalls);
     XTESTS_TEST_INTEGER_EQUAL(13, s_calls[0]);
+}
+
+static void
+test_callback_may_add_and_uninit(void)
+{
+    s_ncalls = 0;
+    s_reenter_add_rc = -1;
+
+    XTESTS_TEST_INTEGER_EQUAL(0, pantheios_extras_atexit_add(record_then_reenter, &s_tag1));
+
+    pantheios_extras_atexit_uninit();
+
+    XTESTS_TEST_INTEGER_EQUAL(0, s_reenter_add_rc);
+    XTESTS_TEST_INTEGER_EQUAL(2, s_ncalls);
+    XTESTS_TEST_INTEGER_EQUAL(1, s_calls[0]);
+    XTESTS_TEST_INTEGER_EQUAL(17, s_calls[1]);
 }
 
 
@@ -138,9 +165,8 @@ main(int argc, char* argv[])
     if (XTESTS_START_RUNNER("test.unit.atexit.api", verbosity))
     {
         /* Order matters: add-without-init must run before the single
-         * process init. Later cases add/drain the list; process atexit
-         * is then a no-op unless add-after-uninit leaves nodes (those
-         * are drained again before exit).
+         * process init. Later cases drain before return. The libc hook
+         * stays registered, so process exit sees an empty list.
          */
         XTESTS_RUN_CASE(test_add_without_init_then_uninit);
         XTESTS_RUN_CASE(test_init_succeeds);
@@ -149,6 +175,7 @@ main(int argc, char* argv[])
         XTESTS_RUN_CASE(test_uninit_is_idempotent_for_callbacks);
         XTESTS_RUN_CASE(test_init_after_uninit_fails);
         XTESTS_RUN_CASE(test_add_after_uninit_then_uninit_again);
+        XTESTS_RUN_CASE(test_callback_may_add_and_uninit);
 
         XTESTS_PRINT_RESULTS();
 
