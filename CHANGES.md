@@ -1,6 +1,21 @@
 # Pantheios.Extras.AtExit - Changes <!-- omit in toc -->
 
 
+## 0.1.4 - 4th November 2026
+
+* contract:
+  * `uninit()` drains the list and leaves the libc `atexit` hook registered, so a later `add()` still runs at process exit;
+  * callbacks run after the library lock is released, so a callback may call `add()` or `uninit()`;
+  * `init()` serialises concurrent callers and returns `EBUSY` or `ENOMEM` rather than the raw `atexit()` result;
+  * `add()` before `init()` queues callbacks that process exit drains only after a successful `init()`;
+* version:
+  * added `PANTHEIOS_EXTRAS_ATEXIT_VER_0_1_4` with `PANTHEIOS_EXTRAS_ATEXIT_VER_RELSTATUS` **0xFF**;
+* testing:
+  * unit tests cover `add` after `uninit`, and `add` / `uninit` from inside a callback;
+* documentation:
+  * **README.md** gains **Developer Experience** immediately after **Introduction**;
+
+
 ## 0.1.4-beta5 - 2nd November 2026
 
 * version:

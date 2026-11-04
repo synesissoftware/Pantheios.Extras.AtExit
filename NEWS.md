@@ -10,6 +10,7 @@
 
 | Date                | News Item                                                                                                                    | Details                                                      |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| 4th November 2026   | Release of [**Pantheios.Extras.AtExit** 0.1.4](https://github.com/synesissoftware/Pantheios.Extras.AtExit/releases/tag/0.1.4) | re-entrant drain; `init` returns `errno`; `RELSTATUS` `0xFF` |
 | 2nd November 2026   | Release of [Pantheios.Extras.AtExit 0.1.4-beta5](https://github.com/synesissoftware/Pantheios.Extras.AtExit/releases/tag/0.1.4-beta5) | **STLSoft** **1.11.5**; **xTests** **0.28.2** |
 | 1st November 2026   | Release of [Pantheios.Extras.AtExit 0.1.4-beta4](https://github.com/synesissoftware/Pantheios.Extras.AtExit/releases/tag/0.1.4-beta4) | `File:` labels use the project-relative path; **Check test names** |
 | 27th October 2026   | Release of [Pantheios.Extras.AtExit 0.1.4-beta3](https://github.com/synesissoftware/Pantheios.Extras.AtExit/releases/tag/0.1.4-beta3) | `HAS_xTests` / `HAS_XTESTS` when **xTests** is detected      |

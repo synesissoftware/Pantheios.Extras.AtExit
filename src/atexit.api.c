@@ -4,7 +4,7 @@
  * Purpose: Implementation file for Pantheios.Extras.AtExit
  *
  * Created: 30th December 2011
- * Updated: 31st August 2026
+ * Updated: 4th November 2026
  *
  * Home:    http://www.pantheios.org/
  *
@@ -137,21 +137,37 @@ pantheios_extras_atexit_unlock_(void)
 
 static
 void
-pantheios_extras_atexit_drain_unlocked_(void)
+pantheios_extras_atexit_invoke_(
+    pantheios_extras_atexit_context_t_* item
+)
 {
-    pantheios_extras_atexit_context_t_* item;
-
-    for (item = s_head; NULL != item; )
+    for (; NULL != item; )
     {
-        pantheios_extras_atexit_context_t_* next = item->next;
+        pantheios_extras_atexit_context_t_* const next = item->next;
 
         item->pfn(item->param);
         free(item);
 
         item = next;
     }
+}
 
-    s_head = NULL;
+
+/* Detach the list under the lock, then invoke it unlocked so a callback may
+ * call add() or uninit() without deadlocking the spinlock.
+ */
+static
+void
+pantheios_extras_atexit_drain_(void)
+{
+    pantheios_extras_atexit_context_t_* head;
+
+    pantheios_extras_atexit_lock_();
+    head    =   s_head;
+    s_head  =   NULL;
+    pantheios_extras_atexit_unlock_();
+
+    pantheios_extras_atexit_invoke_(head);
 }
 
 static
@@ -160,9 +176,7 @@ pantheios_extras_atexit_procedure_(
     void
 )
 {
-    pantheios_extras_atexit_lock_();
-    pantheios_extras_atexit_drain_unlocked_();
-    pantheios_extras_atexit_unlock_();
+    pantheios_extras_atexit_drain_();
 }
 
 
@@ -184,8 +198,12 @@ pantheios_extras_atexit_init(
     ((void)reserved0);
     ((void)reserved1);
 
+    pantheios_extras_atexit_lock_();
+
     if (0 != s_initialised)
     {
+        pantheios_extras_atexit_unlock_();
+
         pantheios_extras_atexit_log_string_("Pantheios.Extras.AtExit already initialised!\n");
 
         return EBUSY;
@@ -195,10 +213,17 @@ pantheios_extras_atexit_init(
 
     if (0 != r)
     {
-        return r;
+        pantheios_extras_atexit_unlock_();
+
+        /* atexit() does not promise an errno. Publish ENOMEM, the usual
+         * reason the handler table cannot take another hook.
+         */
+        return ENOMEM;
     }
 
     s_initialised = 1;
+
+    pantheios_extras_atexit_unlock_();
 
     return 0;
 }
@@ -208,9 +233,7 @@ pantheios_extras_atexit_uninit(
     void
 )
 {
-    pantheios_extras_atexit_lock_();
-    pantheios_extras_atexit_drain_unlocked_();
-    pantheios_extras_atexit_unlock_();
+    pantheios_extras_atexit_drain_();
 }
 
 int
